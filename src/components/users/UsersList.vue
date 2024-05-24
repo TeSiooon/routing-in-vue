@@ -1,6 +1,12 @@
 <template>
+  <button @click="przejdz">Przejd na inna strone</button>
   <ul>
-    <user-item v-for="user in users" :key="user.id" :name="user.fullName" :role="user.role"></user-item>
+    <user-item
+      v-for="user in users"
+      :key="user.id"
+      :name="user.fullName"
+      :role="user.role"
+    ></user-item>
   </ul>
 </template>
 
@@ -12,6 +18,12 @@ export default {
     UserItem,
   },
   inject: ['users'],
+  methods: {
+    przejdz() {
+      // Jakis kodzik a potem bac leci na inna strone
+      this.$router.push('/');
+    },
+  },
 };
 </script>
 
