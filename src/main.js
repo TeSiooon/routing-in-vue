@@ -15,7 +15,8 @@ const router = createRouter({
     { path: '/teams', component: TeamsList },
     { path: '/users', component: UsersList },
     // Definicja dynamicznej sciezki
-    { path: '/teams/:teamId', component: TeamMebers },
+    // Jesli damy props router wie ze dinamiczne sciezki sa przekazywane przez propsy
+    { path: '/teams/:teamId', component: TeamMebers, props: true },
   ],
 });
 

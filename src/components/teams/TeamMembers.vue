@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="/teams/t2">Go to Team 2</router-link>
   </section>
 </template>
 
@@ -17,6 +18,7 @@ import UserItem from '../users/UserItem.vue';
 
 export default {
   inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem,
   },
@@ -26,19 +28,31 @@ export default {
       members: [],
     };
   },
+  methods: {
+    loadTeamMembers(route) {
+      //Pobieranie danych na podstawie sciezki
+      //this.$router.path;  teams/ np t1 lub t2
+      const teamId = route.params.teamId;
+      const selectedTeam = this.teams.find((team) => team.id === teamId);
+      const members = selectedTeam.members;
+      const selectedMembers = [];
+      for (const member of members) {
+        const selectedUser = this.users.find((user) => user.id === member);
+        selectedMembers.push(selectedUser);
+      }
+      this.members = selectedMembers;
+      this.teamName = selectedTeam.name;
+    },
+  },
   created() {
-    //Pobieranie danych na podstawie sciezki
-    //this.$router.path;  teams/ np t1 lu t2
-    const teamId = this.$route.params.teamId;
-    const selectedTeam = this.teams.find((team) => team.id === teamId);
-    const members = selectedTeam.members;
-    const selectedMembers = [];
-    for (const member of members) {
-      const selectedUser = this.users.find((user) => user.id === member);
-      selectedMembers.push(selectedUser);
-    }
-    this.members = selectedMembers;
-    this.teamName = selectedTeam.name;
+    this.loadTeamMembers(this.$route);
+  },
+  watch: {
+    // Dostosowanie dynamicznych linkow tak aby odpowiednio ladowaly dane
+    // Jesli route sie zmieni to dane tez powinny
+    $route(newRoute) {
+      this.loadTeamMembers(newRoute);
+    },
   },
 };
 </script>
