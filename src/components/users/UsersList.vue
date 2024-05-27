@@ -1,5 +1,6 @@
 <template>
   <button @click="przejdz">Przejd na inna strone</button>
+  <button @click="saveChanges">Save changes</button>
   <ul>
     <user-item
       v-for="user in users"
@@ -18,11 +19,31 @@ export default {
     UserItem,
   },
   inject: ['users'],
+  data() {
+    return { changesSaved: false };
+  },
   methods: {
     przejdz() {
       // Jakis kodzik a potem bac leci na inna strone
       this.$router.push('/');
     },
+    saveChanges() {
+      this.changesSaved = true;
+    },
+  },
+  // Jesli nie chcemy tego uzywac w routingu w mainie mozemy dac do komponentu
+  beforeRouteEnter() {},
+  beforeRouteUpdate() {},
+
+  beforeRouteLeave(to, from, next) {
+    console.log('Users list cmp beforerouytelive');
+    console.log(to, from);
+    if (this.changesSaved) {
+      next();
+    } else {
+      const userLeave = confirm('Are u sure?');
+      next(userLeave);
+    }
   },
 };
 </script>

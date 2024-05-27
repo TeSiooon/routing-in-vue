@@ -46,14 +46,20 @@ const router = createRouter({
         default: UsersList,
         footer: UsersFooter,
       },
+      // Przed wejsciem sprawdza czy jakis warunek jest spelniony
+      // beforeeach dziala dla kazdej zmiany routingu
+      beforeEnter(to, from, next) {
+        console.log(to, from);
+        next();
+      },
     },
 
     // Dynamiczne przekierowanie uzytkownika jesli cos zle wpisze
     { path: '/:notFound(.*)', component: NotFound },
   ],
   // Definiujemy jak zachowuje sie scrool
-  scrollBehavior(to, from, savedPosition) {
-    console.log(to, from, savedPosition);
+  scrollBehavior(_, _2, savedPosition) {
+    // console.log(to, from, savedPosition);
     // cofa uzytkownika do ostatnio zapisanej pozycji
     if (savedPosition) {
       return savedPosition;
@@ -64,6 +70,24 @@ const router = createRouter({
       top: 0,
     };
   },
+});
+// Straznicy routing, co zrobia jesli cos(warunek) jest lub go nie ma
+// Np uzywamy tego do autentykacji uzyktownik tj jesli jest zalogowany daj go tam jesli nie to np strona glowna
+router.beforeEach((to, from, next) => {
+  console.log('Global beforeeach');
+  console.log(to, from);
+  // if (to.name === 'team-members') {
+  //   next();
+  // } else {
+  //   next({ name: 'team-members', params: { teamId: 't2' } });
+  // }
+  next();
+});
+
+router.afterEach((to, from) => {
+  // wysylanie danych do analizy
+  console.log(to, from);
+  // dziala po kazdej zmianie sciezki wiec jest useless do walidacji np danych logowania
 });
 
 const app = createApp(App);
