@@ -51,6 +51,19 @@ const router = createRouter({
     // Dynamiczne przekierowanie uzytkownika jesli cos zle wpisze
     { path: '/:notFound(.*)', component: NotFound },
   ],
+  // Definiujemy jak zachowuje sie scrool
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition);
+    // cofa uzytkownika do ostatnio zapisanej pozycji
+    if (savedPosition) {
+      return savedPosition;
+    }
+    //przenosi uzytkownika na gore
+    return {
+      left: 0,
+      top: 0,
+    };
+  },
 });
 
 const app = createApp(App);
