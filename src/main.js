@@ -6,6 +6,8 @@ import TeamsList from './components/teams/TeamsList.vue';
 import UsersList from './components/users/UsersList.vue';
 import TeamMebers from './components/teams/TeamMembers.vue';
 import NotFound from './components/nav/NotFound.vue';
+import TeamsFooter from './components/teams/TeamsFooter';
+import UsersFooter from './components/users/UsersFooter.vue';
 
 const router = createRouter({
   // Sledzenie historii na stronie np jesli klikniesz back to
@@ -20,7 +22,10 @@ const router = createRouter({
     {
       name: 'teams',
       path: '/teams',
-      component: TeamsList,
+      components: {
+        default: TeamsList,
+        footer: TeamsFooter,
+      },
       // Tak sie zagniezdza linki
       children: [
         // Definicja dynamicznej sciezki
@@ -33,7 +38,15 @@ const router = createRouter({
         },
       ],
     },
-    { path: '/users', component: UsersList },
+    {
+      path: '/users',
+      // Takie cos pozwala na renderowanie wielu elemenot
+      // nazwa i komponent tak jak w slotsach
+      components: {
+        default: UsersList,
+        footer: UsersFooter,
+      },
+    },
 
     // Dynamiczne przekierowanie uzytkownika jesli cos zle wpisze
     { path: '/:notFound(.*)', component: NotFound },
