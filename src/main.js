@@ -15,13 +15,20 @@ const router = createRouter({
     //  Redirect to wiadomka przekierowanie ale mozna zrobic to inaczej ('lepiej')
     // I tutaj chodzi o alias
     //  { path: '/teams', component: TeamsList, alias: '/' },
-    { path: '/', redirect: '/teams' },
     // dany komponent jest ladowany na danej sciezce
-    { path: '/teams', component: TeamsList },
+    { path: '/', redirect: '/teams' },
+    {
+      path: '/teams',
+      component: TeamsList,
+      // Tak sie zagniezdza linki
+      children: [
+        // Definicja dynamicznej sciezki
+        // Jesli damy props router wie ze dinamiczne sciezki sa przekazywane przez propsy
+        { path: ':teamId', component: TeamMebers, props: true },
+      ],
+    },
     { path: '/users', component: UsersList },
-    // Definicja dynamicznej sciezki
-    // Jesli damy props router wie ze dinamiczne sciezki sa przekazywane przez propsy
-    { path: '/teams/:teamId', component: TeamMebers, props: true },
+
     // Dynamiczne przekierowanie uzytkownika jesli cos zle wpisze
     { path: '/:notFound(.*)', component: NotFound },
   ],

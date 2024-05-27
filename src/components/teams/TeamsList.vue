@@ -1,4 +1,8 @@
 <template>
+  <!-- W app.vue mamy juz ten kompoent ale on jest odpowiedzialny za wyswietlanie nadrzednych
+  wartosci, przez to musimy znowu dodac router-view aby byla mozliwosc wyswietlania
+  "dzieci dla danej sciezki" -->
+  <router-view></router-view>
   <ul>
     <teams-item
       v-for="team in teams"
