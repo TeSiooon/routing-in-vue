@@ -12,7 +12,14 @@ export default {
   props: ['name', 'memberCount', 'id'],
   computed: {
     teamMembersLink() {
-      return '/teams/' + this.id;
+      // return '/teams/' + this.id;
+      // lepsze rozwiazanie bo nie bedziemy musieli zmieniac linku jesli ten zmieni sie w routerze
+      // a dajemy tylko nazwe i essa
+      return {
+        name: 'team-members',
+        params: { teamId: this.id },
+        query: { sort: 'asc' },
+      };
     },
   },
 };

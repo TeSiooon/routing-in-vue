@@ -18,13 +18,19 @@ const router = createRouter({
     // dany komponent jest ladowany na danej sciezce
     { path: '/', redirect: '/teams' },
     {
+      name: 'teams',
       path: '/teams',
       component: TeamsList,
       // Tak sie zagniezdza linki
       children: [
         // Definicja dynamicznej sciezki
         // Jesli damy props router wie ze dinamiczne sciezki sa przekazywane przez propsy
-        { path: ':teamId', component: TeamMebers, props: true },
+        {
+          name: 'team-members',
+          path: ':teamId',
+          component: TeamMebers,
+          props: true,
+        },
       ],
     },
     { path: '/users', component: UsersList },

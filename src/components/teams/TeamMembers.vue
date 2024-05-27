@@ -46,6 +46,7 @@ export default {
   },
   created() {
     this.loadTeamMembers(this.$route);
+    console.log(this.$route.query);
   },
   watch: {
     // Dostosowanie dynamicznych linkow tak aby odpowiednio ladowaly dane
